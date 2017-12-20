@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Working Title</title>
+</head>
+
+<body>
+	<button data-searchItem="Thing 1">Thing 1</button>
+	<button data-searchItem="Thing 2">Thing 2</button>
+	<button data-searchItem="Thing 3">Thing 3</button>
+
+	<div id = "gifs-go-hear">
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type = "text/javascript">
+		
+		var topics = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
+		$("button").on("click", function(){
+	//attribute the gif variable 
+		var searchItem = $(this).attr("data-searchItem");
+
+		// var query url + name of search term
+		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchItem + giphyApiKey 
+		// + queryLimit;
+		console.log(queryURL);
+
+		// perform ajax get request
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		})
+
+		// after the data comes back from the api, write a .done f(x)
+		.done(function(response) {
+
+			var results = response.data;
+			// loop through every result item
+			for (var i = 0; i < results.length; i++) {
+				// conditional if the result has an appropriate rating
+				if (results[i].rating !== 'r' && results[i].rating !== "pg-13") {
+
+					//create an image tag
+					var gifDiv = $("<div class = 'item");
+
+					//store the results from the item's rating
+					var rating = results[i].rating;
+
+					// creating a ptag w/ results item's rating
+					var p = $("<p>").text("Rating: " + rating);
+
+					//create an image tag
+					var thingImage = $("<img>");
+
+					thingImage.attr("src", results[i].images.fixed_height.url);
+
+
+					//append the image and the rating p-tag for a gif var
+
+					//prepend the gif div in the html				
+				}
+
+				
+			}
+
+		
+		})
+
+
+
+
+	})
+	$(".gif").on("click", function() {
+      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+     var state = $(this).attr("data-state");
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's data-state to animate
+      // Else set src to the data-still value
+     if (state === "still") {
+       $(this).attr("src", $(this).attr("data-animate"));
+       $(this).attr("data-state", "animate");
+     } else {
+       $(this).attr("src", $(this).attr("data-still"));
+       $(this).attr("data-state", "still");
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>
